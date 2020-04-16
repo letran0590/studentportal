@@ -5,6 +5,8 @@ import com.example.accessingdatamysql.model.User;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.Date;
+
 @Getter
 @Builder
 public class UserResponseDto {
@@ -20,6 +22,8 @@ public class UserResponseDto {
 
     private User tutor;
 
+    private Date dob;
+
     public static UserResponseDto fromUser(User user){
         UserResponseDto responseDto = UserResponseDto.builder()
                 .firstName(user.getFirstName())
@@ -27,6 +31,8 @@ public class UserResponseDto {
                 .role(user.getRole())
                 .email(user.getEmail())
                 .tutor(user.getTutor())
+                .dob(user.getDob())
+                .address(user.getAddress())
                 .build();
         return responseDto;
     }

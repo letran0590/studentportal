@@ -99,7 +99,7 @@ public class DocumentServiceImpl implements DocumentService {
             document.setSize(request.getFile().getSize());
             documentRepository.save(document);
             return document;
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
         }
     }

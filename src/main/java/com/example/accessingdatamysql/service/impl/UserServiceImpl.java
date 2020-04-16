@@ -1,8 +1,7 @@
 package com.example.accessingdatamysql.service.impl;
 
-import com.example.accessingdatamysql.dto.request.CreateUserRequest;
-import com.example.accessingdatamysql.dto.request.LoginRequest;
-import com.example.accessingdatamysql.dto.request.UpdateUserRequest;
+import com.example.accessingdatamysql.dto.request.*;
+import com.example.accessingdatamysql.dto.request.filter.UserFilterRequest;
 import com.example.accessingdatamysql.dto.response.UserResponseDto;
 import com.example.accessingdatamysql.exception.ResourceNotFoundException;
 import com.example.accessingdatamysql.exception.UserExistException;
@@ -34,6 +33,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> getListUserByFilter(UserFilterRequest filterRequest) {
+        return userRepository.findAllByTutorFlagAndRole_Id(filterRequest.isTutorFlag(), filterRequest.getRoleId());
     }
 
     @Override
@@ -86,6 +90,50 @@ public class UserServiceImpl implements UserService {
         } else {
             UserResponseDto response = UserResponseDto.fromUser(user);
             return response;
+        }
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public UserResponseDto updateInfo(UpdateInfoRequest request){
+        User user = userRepository.findByEmail(request.getEmail());
+
+        if(user == null){
+            throw new ResourceNotFoundException("Email is invalid");
+        }else{
+            user.setFirstName(request.getFirstName());
+            user.setLastName(request.getLastName());
+            user.setDob(request.getDob());
+            user.setAddress(request.getAddress());
+
+            userRepository.save(user);
+
+            UserResponseDto response = UserResponseDto.fromUser(user);
+            return response;
+        }
+    }
+
+    @Override
+    public UserResponseDto updatePassword(UpdatePasswordRequest request) {
+        User user = userRepository.findByEmail(request.getEmail());
+
+        if(user == null){
+            throw new ResourceNotFoundException("Email is invalid");
+        }else{
+            if(!user.getPassword().equals(request.getPassword())){
+                throw new ResourceNotFoundException("Password is not correct");
+            }else{
+                user.setPassword(request.getNewPassword());
+
+                userRepository.save(user);
+
+                UserResponseDto response = UserResponseDto.fromUser(user);
+                return response;
+            }
         }
     }
 }

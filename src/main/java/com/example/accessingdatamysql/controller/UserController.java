@@ -1,10 +1,9 @@
 package com.example.accessingdatamysql.controller;
 
 import com.example.accessingdatamysql.common.ApiConstant;
-import com.example.accessingdatamysql.dto.request.CreateUserRequest;
-import com.example.accessingdatamysql.dto.request.LoginRequest;
-import com.example.accessingdatamysql.dto.request.UpdateUserRequest;
+import com.example.accessingdatamysql.dto.request.*;
 import com.example.accessingdatamysql.dto.request.filter.CommentFilterRequest;
+import com.example.accessingdatamysql.dto.request.filter.UserFilterRequest;
 import com.example.accessingdatamysql.dto.response.CommentResponseDto;
 import com.example.accessingdatamysql.dto.response.ResponseDto;
 import com.example.accessingdatamysql.dto.response.UserResponseDto;
@@ -20,6 +19,7 @@ import java.util.List;
 
 @RestController
 @Slf4j // This means that this class is a Controller
+@CrossOrigin
 @RequestMapping(ApiConstant.USER) // This means URL's start with /demo (after Application path)
 public class UserController {
 	private final UserService userService;
@@ -43,8 +43,26 @@ public class UserController {
 	public ResponseEntity<List<User>> assignStudents(@RequestBody @Valid UpdateUserRequest request){
 		return ResponseEntity.ok(userService.assignStudents(request));
 	}
+
 	@GetMapping("/filter")
-	public List<User> filter(){
-		return userService.findAll();
+	public List<User> filter(UserFilterRequest filterRequest){
+		return userService.getListUserByFilter(filterRequest);
+	}
+
+	@GetMapping("/findByEmail")
+	public User findByEmail(@RequestParam String email){
+		return userService.findUserByEmail(email);
+	}
+
+	@PostMapping("/updateInfo")
+	public ResponseDto<UserResponseDto>  updateUserInfo(@RequestBody @Valid UpdateInfoRequest request){
+		UserResponseDto userResponse = userService.updateInfo(request);
+		return new ResponseDto<>(userResponse);
+	}
+
+	@PostMapping("/updatePassword")
+	public ResponseDto<UserResponseDto>  updatePassword(@RequestBody @Valid UpdatePasswordRequest request){
+		UserResponseDto userResponse = userService.updatePassword(request);
+		return new ResponseDto<>(userResponse);
 	}
 }

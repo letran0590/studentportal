@@ -13,7 +13,7 @@ RETVAL=0
 moduleName="student-portal"
 JAVA_OPTS="-Xmx300m -Xms128m -Dfile.encoding=UTF8 -Dspring.config.location=config/application-develop.properties"
 MODULE_OPTS=""
-FOLDER="/home/le_tran0590/studentportal"
+FOLDER="/home/le_tran0590/studentportal/target"
 JAR_FILE=student-portal-1.0.jar
 
 start() {

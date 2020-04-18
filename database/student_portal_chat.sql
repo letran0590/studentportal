@@ -1,0 +1,15 @@
+INSERT INTO student_portal.hibernate_sequence (next_val) VALUES (3);
+INSERT INTO student_portal.hibernate_sequence (next_val) VALUES (3);
+INSERT INTO student_portal.hibernate_sequence (next_val) VALUES (3);
+INSERT INTO student_portal.hibernate_sequence (next_val) VALUES (3);
+INSERT INTO student_portal.hibernate_sequence (next_val) VALUES (3);
+INSERT INTO student_portal.role (id, name) VALUES (1, 'Staff');
+INSERT INTO student_portal.role (id, name) VALUES (2, 'Tutor');
+INSERT INTO student_portal.role (id, name) VALUES (3, 'Student');
+INSERT INTO student_portal.user (id, address, dob, email, first_name, gender, grade, last_name, password, tutor_flag, role_id, tutor_id) VALUES (1, 'Le is testing update info', '1990-04-06 00:00:00', 'letran@gmail.com', 'Le', 'male', null, 'Tran', '654321', false, 3, null);
+INSERT INTO student_portal.user (id, address, dob, email, first_name, gender, grade, last_name, password, tutor_flag, role_id, tutor_id) VALUES (3, 'sample address', '1990-04-06 07:00:00', 'student1@gmail.com', 'One', 'male', null, 'Nguyen', '123456', false, 3, null);
+INSERT INTO student_portal.user (id, address, dob, email, first_name, gender, grade, last_name, password, tutor_flag, role_id, tutor_id) VALUES (4, 'sample address', '1990-04-06 07:00:00', 'student2@gmail.com', 'Two', 'male', null, 'Nguyen', '123456', false, 3, null);
+INSERT INTO student_portal.user (id, address, dob, email, first_name, gender, grade, last_name, password, tutor_flag, role_id, tutor_id) VALUES (5, 'sample address', '1990-04-06 07:00:00', 'student3@gmail.com', 'Three', 'male', null, 'Tran', '123456', false, 3, null);
+INSERT INTO student_portal.user (id, address, dob, email, first_name, gender, grade, last_name, password, tutor_flag, role_id, tutor_id) VALUES (6, 'sample address', '1990-04-06 07:00:00', 'student4@gmail.com', 'Four', 'male', null, 'Tran', '123456', false, 3, null);
+INSERT INTO student_portal.user (id, address, dob, email, first_name, gender, grade, last_name, password, tutor_flag, role_id, tutor_id) VALUES (7, 'sample address', '1990-04-06 07:00:00', 'tutor1@gmail.com', 'Math', 'male', null, 'Nguyen', '123456', false, 2, null);
+INSERT INTO student_portal.user (id, address, dob, email, first_name, gender, grade, last_name, password, tutor_flag, role_id, tutor_id) VALUES (8, 'sample address', '1990-04-06 07:00:00', 'tutor2@gmail.com', 'Litt', 'male', null, 'Tran', '123456', false, 2, null);

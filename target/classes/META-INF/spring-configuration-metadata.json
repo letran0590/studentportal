@@ -1,0 +1,22 @@
+{
+  "groups": [
+    {
+      "name": "file",
+      "type": "com.example.studentportal.config.FileStorageProperties",
+      "sourceType": "com.example.studentportal.config.FileStorageProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "file.upload-avatar-dir",
+      "type": "java.lang.String",
+      "sourceType": "com.example.studentportal.config.FileStorageProperties"
+    },
+    {
+      "name": "file.upload-document-dir",
+      "type": "java.lang.String",
+      "sourceType": "com.example.studentportal.config.FileStorageProperties"
+    }
+  ],
+  "hints": []
+}

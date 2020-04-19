@@ -1,2 +1,6 @@
-mvn clean install
-nohup java -jar target/student-portal-1.0.jar --spring.config.location=file:////home/le_tran0590/studentportal/config/application-develop.properties >> studentportal.log
+#!/bin/bash
+git fetch origin
+git checkout master
+git pull origin master
+mvn clean install -Dmaven.test.skip=true
+./run.sh

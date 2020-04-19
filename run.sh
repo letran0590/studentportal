@@ -1,0 +1,1 @@
+ java -jar target/student-portal-1.0.jar --spring.config.location=file:////home/le_tran0590/studentportal/config/application-develop.properties > /var/log/student_portal.log 2>&1 &

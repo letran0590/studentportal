@@ -40,8 +40,6 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final Path fileStorageLocation;
     private final FileStorageProperties fileStorageProperties;
-    @Value("${user.default-password}")
-    private String defaultPassword;
 
     @Autowired
     public UserServiceImpl(final UserRepository userRepository,
@@ -228,7 +226,7 @@ public class UserServiceImpl implements UserService {
             tempStudent.setEmail(row.getCell(3).getStringCellValue());
             tempStudent.setAddress(row.getCell(4).getStringCellValue());
             tempStudent.setDob(row.getCell(5).getDateCellValue());
-            tempStudent.setPassword(defaultPassword);
+            tempStudent.setPassword(fileStorageProperties.getDefaultPassword());
             if(null != studentRole){
                 tempStudent.setRole(studentRole);
             }

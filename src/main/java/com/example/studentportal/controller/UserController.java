@@ -82,4 +82,11 @@ public class UserController {
 		}
 		return ResponseEntity.ok(user);
 	}
+
+	@PostMapping("/import")
+	public ResponseEntity<?> mapReapExcelDatatoDB(@RequestParam("file") MultipartFile reapExcelDataFile) throws IOException {
+		log.debug("Upload avatar!");
+		userService.importUsers(reapExcelDataFile);
+		return ResponseEntity.ok().body("Import user successfully");
+	}
 }

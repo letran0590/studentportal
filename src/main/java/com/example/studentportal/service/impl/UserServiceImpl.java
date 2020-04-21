@@ -13,9 +13,9 @@ import com.example.studentportal.model.User;
 import com.example.studentportal.repository.RoleRepository;
 import com.example.studentportal.repository.UserRepository;
 import com.example.studentportal.service.UserService;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+//import org.apache.poi.xssf.usermodel.XSSFRow;
+//import org.apache.poi.xssf.usermodel.XSSFSheet;
+//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -209,30 +209,30 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void importUsers(MultipartFile reapExcelDataFile) throws IOException {
-        List<User> tempStudentList = new ArrayList<User>();
-        XSSFWorkbook workbook = new XSSFWorkbook(reapExcelDataFile.getInputStream());
-        XSSFSheet worksheet = workbook.getSheetAt(0);
-        Role studentRole = roleRepository.findAllByName("Student");
-        for(int i=1;i<worksheet.getPhysicalNumberOfRows() ;i++) {
-            User tempStudent = new User();
-
-            XSSFRow row = worksheet.getRow(i);
-//            firstname	lastname	gender	email	address	dob
-//            nhut	huynh	mail	nhuthm080280@gmail.com	1111	9/6/1990
-
-            tempStudent.setFirstName(row.getCell(0).getStringCellValue());
-            tempStudent.setLastName(row.getCell(1).getStringCellValue());
-            tempStudent.setGender(row.getCell(2).getStringCellValue());
-            tempStudent.setEmail(row.getCell(3).getStringCellValue());
-            tempStudent.setAddress(row.getCell(4).getStringCellValue());
-            tempStudent.setDob(row.getCell(5).getDateCellValue());
-            tempStudent.setPassword(fileStorageProperties.getDefaultPassword());
-            if(null != studentRole){
-                tempStudent.setRole(studentRole);
-            }
-            tempStudentList.add(tempStudent);
-        }
-        userRepository.saveAll(tempStudentList);
+//        List<User> tempStudentList = new ArrayList<User>();
+//        XSSFWorkbook workbook = new XSSFWorkbook(reapExcelDataFile.getInputStream());
+//        XSSFSheet worksheet = workbook.getSheetAt(0);
+//        Role studentRole = roleRepository.findAllByName("Student");
+//        for(int i=1;i<worksheet.getPhysicalNumberOfRows() ;i++) {
+//            User tempStudent = new User();
+//
+//            XSSFRow row = worksheet.getRow(i);
+////            firstname	lastname	gender	email	address	dob
+////            nhut	huynh	mail	nhuthm080280@gmail.com	1111	9/6/1990
+//
+//            tempStudent.setFirstName(row.getCell(0).getStringCellValue());
+//            tempStudent.setLastName(row.getCell(1).getStringCellValue());
+//            tempStudent.setGender(row.getCell(2).getStringCellValue());
+//            tempStudent.setEmail(row.getCell(3).getStringCellValue());
+//            tempStudent.setAddress(row.getCell(4).getStringCellValue());
+//            tempStudent.setDob(row.getCell(5).getDateCellValue());
+//            tempStudent.setPassword(fileStorageProperties.getDefaultPassword());
+//            if(null != studentRole){
+//                tempStudent.setRole(studentRole);
+//            }
+//            tempStudentList.add(tempStudent);
+//        }
+//        userRepository.saveAll(tempStudentList);
     }
 
     private void createDirectory(int userId) {

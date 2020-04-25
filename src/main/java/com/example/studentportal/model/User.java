@@ -41,6 +41,11 @@ public class User {
     @JsonIgnore
     private String password;
 
+    @NotNull
+    @Size(max = 10)
+    @JsonIgnore
+    private String userCode;
+
     private Date dob;
 
     @NonNull

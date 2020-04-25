@@ -18,6 +18,8 @@ public class UserResponseDto {
 
     private String address;
 
+    private String userCode;
+
     private Role role;
 
     private User tutor;
@@ -33,6 +35,7 @@ public class UserResponseDto {
                 .tutor(user.getTutor())
                 .dob(user.getDob())
                 .address(user.getAddress())
+                .userCode(user.getUserCode())
                 .build();
         return responseDto;
     }

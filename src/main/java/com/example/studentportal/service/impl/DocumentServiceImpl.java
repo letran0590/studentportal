@@ -90,7 +90,7 @@ public class DocumentServiceImpl implements DocumentService {
             document.setUploadedDate(new Date());
 
             String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path(ApiConstant.CONTENT + ApiConstant.DOWNLOAD + "/")
+                    .path(ApiConstant.DOCUMENT + ApiConstant.DOWNLOAD + "/")
                     .path(fileName)
                     .toUriString();
             document.setFileDownloadUri(fileDownloadUri);

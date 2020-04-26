@@ -10,6 +10,8 @@ import java.util.Date;
 @Getter
 @Builder
 public class UserResponseDto {
+    private int id;
+
     private String firstName;
 
     private String lastName;
@@ -26,6 +28,7 @@ public class UserResponseDto {
 
     public static UserResponseDto fromUser(User user){
         UserResponseDto responseDto = UserResponseDto.builder()
+                .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .role(user.getRole())

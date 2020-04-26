@@ -106,27 +106,27 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     private void createDocumentFile(MultipartFile file, String fileName, Document document) throws IOException {
-        createDirectory(document);
+        //createDirectory(document);
         // Copy file to the target location (Replacing existing file with the same name)
-        Path targetLocation = this.fileStorageLocation.resolve(document.getId() + "/" +fileName);
+        Path targetLocation = this.fileStorageLocation.resolve(fileName);
         Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
         String viewURL = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(ApiConstant.CONTENT + "/" + document.getId() + "/")
+                .path(ApiConstant.CONTENT + "/")
                 .path(fileName)
                 .toUriString();
         document.setViewDocumentUrl(viewURL);
         documentRepository.save(document);
     }
 
-    private void createDirectory(Document document) {
-        Path fileStorageLocation = Paths.get(fileStorageProperties.getUploadDocumentDir() + "/" + document.getId() + "/")
-                .toAbsolutePath().normalize();
-        try {
-            Files.createDirectories(fileStorageLocation);
-        } catch (Exception ex) {
-            throw new FileStorageException("Could not create the directory where the uploaded files will be stored.", ex);
-        }
-    }
+//    private void createDirectory(Document document) {
+//        Path fileStorageLocation = Paths.get(fileStorageProperties.getUploadDocumentDir() + "/")
+//                .toAbsolutePath().normalize();
+//        try {
+//            Files.createDirectories(fileStorageLocation);
+//        } catch (Exception ex) {
+//            throw new FileStorageException("Could not create the directory where the uploaded files will be stored.", ex);
+//        }
+//    }
 
     @Override
     public Resource loadFileAsResource(String fileName) {

@@ -31,6 +31,8 @@ public interface UserService {
 
     UserResponseDto updatePassword(UpdatePasswordRequest request);
 
+    List<User> getStudentsByTutorId(int tutorId);
+
     User uploadAvatar(int userId, MultipartFile file) throws IOException;
 
     void importUsers(MultipartFile reapExcelDataFile) throws IOException;

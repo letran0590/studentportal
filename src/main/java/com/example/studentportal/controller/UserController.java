@@ -89,4 +89,10 @@ public class UserController {
 		userService.importUsers(reapExcelDataFile);
 		return ResponseEntity.ok().body("Import user successfully");
 	}
+
+	@GetMapping("/getStudents")
+	public List<User> getStudentsByTutorId(@RequestParam("tutorId") int tutorId){
+		return userService.getStudentsByTutorId(tutorId);
+	}
+
 }

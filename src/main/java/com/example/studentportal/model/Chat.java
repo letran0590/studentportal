@@ -38,4 +38,8 @@ public class Chat {
     @JoinColumn(name = "tutor_ID", referencedColumnName = "id")
     private User tutor;
 
+    @ManyToOne
+    @JoinColumn(name = "sender_ID", referencedColumnName = "id")
+    private User sender;
+
 }

@@ -48,15 +48,27 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public Chat save(CreateChatRequest request) {
+
         // Check student id
         User student = userRepository.findAllByIdAndRole_Id(request.getStudentId(), Role.STUDENT.getValue());
         if (student == null) {
             throw new ResourceNotFoundException("StudentId " + request.getStudentId() + " not found");
         }
+
         // Check tutor id
         User tutor = userRepository.findAllByIdAndRole_Id(request.getTutorId(), Role.TUTOR.getValue());
         if (tutor == null) {
             throw new ResourceNotFoundException("TutorId " + request.getTutorId() + " not found");
+        }
+
+        User sender;
+
+        if(request.getSenderId() == request.getTutorId()){
+            sender = tutor;
+        }else if(request.getSenderId() == request.getStudentId()){
+            sender = student;
+        }else{
+            throw new ResourceNotFoundException("SenderId " + request.getTutorId() + " is not valid");
         }
 
         Chat chat = new Chat();
@@ -64,6 +76,7 @@ public class ChatServiceImpl implements ChatService {
         chat.setTutor(tutor);
         chat.setText(request.getText());
         chat.setDateChat(new Date());
+        chat.setSender(sender);
         return chatRepository.save(chat);
     }
 

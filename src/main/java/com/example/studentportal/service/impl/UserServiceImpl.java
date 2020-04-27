@@ -103,6 +103,7 @@ public class UserServiceImpl implements UserService {
             List<User> userList = userRepository.findAllByIdIn(request.getStudentIds());
             userList.stream().forEach(user -> {
                 user.setTutor(tutor);
+                user.setTutorFlag(true);
             });
             userRepository.saveAll(userList);
             return userList;

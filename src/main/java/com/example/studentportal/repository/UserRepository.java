@@ -16,6 +16,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     List<User> findAllByIdIn(List<Integer> studentIds);
     boolean existsByEmail(String email);
     User findByEmail(String email);
-
+    List<User> findAllByTutorId(int tutorId);
     List<User> findAllByTutorFlagAndRole_Id(boolean tutorFlag, Integer roleId);
 }

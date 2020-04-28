@@ -20,6 +20,8 @@ public class ChatResponseDto {
 
     private Date chatDate;
 
+    private User sender;
+
 
     public static ChatResponseDto fromChat(Chat chat){
         ChatResponseDto responseDto = ChatResponseDto.builder()
@@ -28,6 +30,7 @@ public class ChatResponseDto {
                 .tutor(chat.getTutor())
                 .text(chat.getText())
                 .chatDate(chat.getDateChat())
+                .sender(chat.getSender())
                 .build();
         return responseDto;
     }

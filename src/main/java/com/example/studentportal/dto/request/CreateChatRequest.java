@@ -16,6 +16,9 @@ public class CreateChatRequest {
     private Integer tutorId;
 
     @NonNull
+    private Integer senderId;
+
+    @NonNull
     private String text;
 
 }

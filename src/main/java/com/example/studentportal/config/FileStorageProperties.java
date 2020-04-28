@@ -9,6 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "file")
 public class FileStorageProperties {
     private String uploadDocumentDir;
+    //file.upload-document-dir
     private String uploadAvatarDir;
     private String defaultPassword;
 }

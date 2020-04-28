@@ -32,21 +32,10 @@ public class Document {
 
 	private Date lastModified;
 
-//	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-//	@JoinColumn(name = "student_id", nullable = false)
-//	@OnDelete(action = OnDeleteAction.CASCADE)
-//	@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
-//	@JsonIdentityReference(alwaysAsId=true)
 	@ManyToOne
 	@JoinColumn(name = "student_id", referencedColumnName = "id")
 	private User student;
 
-//	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-//	@JoinColumn(name = "tutor_id", nullable = false)
-//	@OnDelete(action = OnDeleteAction.CASCADE)
-//	@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
-//	@JsonIdentityReference(alwaysAsId=true)
-//	@JsonProperty("tutor_id")
 	@ManyToOne
 	@JoinColumn(name = "tutor_id", referencedColumnName = "id")
 	private User tutor;

@@ -9,4 +9,6 @@ public class ApiConstant {
     public static final String COMMENT = DOCUMENT + "/comment";
     public static final String AVATAR = "/avatar";
     public static final String CONTENT = "/content";
+    public static final String BLOG = "/blog";
 }
+

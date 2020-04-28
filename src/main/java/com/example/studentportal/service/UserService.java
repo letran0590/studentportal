@@ -21,7 +21,7 @@ public interface UserService {
 
     List<User> assignStudents(UpdateUserRequest request);
 
-    void deleteById(Integer id);
+    void deleteById(int id, int adminId) throws Exception;
 
     UserResponseDto login(LoginRequest request);
 
@@ -33,7 +33,13 @@ public interface UserService {
 
     List<User> getStudentsByTutorId(int tutorId);
 
+    public List<User> getAllStudents();
+
     User uploadAvatar(int userId, MultipartFile file) throws IOException;
 
     void importUsers(MultipartFile reapExcelDataFile) throws IOException;
+
+    void forgotPassword(String email) throws Exception;
+
+    UserResponseDto changeRole(int userId, int roleId, int adminId) throws Exception;
 }

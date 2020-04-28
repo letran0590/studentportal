@@ -6,6 +6,8 @@ import com.example.studentportal.model.User;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.Date;
+
 @Getter
 @Builder
 public class CommentResponseDto {
@@ -15,6 +17,8 @@ public class CommentResponseDto {
 
     private User user;
 
+    private Date dateComment;
+
     private Document document;
 
 
@@ -23,6 +27,8 @@ public class CommentResponseDto {
                 .id(comment.getId())
                 .user(comment.getUser())
                 .document(comment.getDocument())
+                .dateComment(comment.getDateComment())
+                .text(comment.getText())
                 .build();
         return responseDto;
     }

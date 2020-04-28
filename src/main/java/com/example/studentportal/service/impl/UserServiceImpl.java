@@ -1,6 +1,7 @@
 package com.example.studentportal.service.impl;
 
 import com.example.studentportal.common.ApiConstant;
+import com.example.studentportal.common.AppUtility;
 import com.example.studentportal.config.FileStorageProperties;
 import com.example.studentportal.dto.request.*;
 import com.example.studentportal.dto.request.filter.UserFilterRequest;
@@ -13,12 +14,12 @@ import com.example.studentportal.model.User;
 import com.example.studentportal.repository.RoleRepository;
 import com.example.studentportal.repository.UserRepository;
 import com.example.studentportal.service.UserService;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -40,16 +41,20 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final Path fileStorageLocation;
     private final FileStorageProperties fileStorageProperties;
+    private final AppUtility appUtility;
+
+    private final static int STUDENT_ROLE = 1;
 
     @Autowired
     public UserServiceImpl(final UserRepository userRepository,
                            final RoleRepository roleRepository,
-                           final FileStorageProperties fileStorageProperties, FileStorageProperties fileStorageProperties1) {
+                           final FileStorageProperties fileStorageProperties, FileStorageProperties fileStorageProperties1, AppUtility appUtility) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadAvatarDir())
                 .toAbsolutePath().normalize();
         this.fileStorageProperties = fileStorageProperties1;
+        this.appUtility = appUtility;
 
         try {
             Files.createDirectories(this.fileStorageLocation);
@@ -83,7 +88,7 @@ public class UserServiceImpl implements UserService {
         ModelMapper modelMapper = new ModelMapper();
         User user = modelMapper.map(request, User.class);
         setRole(request, user);
-        user.setAvatarViewUrl("http://localhost:9090/avatar/noimage_person.png");
+        //user.setAvatarViewUrl("http://localhost:9090/avatar/noimage_person.png");
         return userRepository.save(user);
     }
 
@@ -104,6 +109,7 @@ public class UserServiceImpl implements UserService {
             userList.stream().forEach(user -> {
                 user.setTutor(tutor);
                 user.setTutorFlag(true);
+                appUtility.sentConfirmMail(user, tutor);
             });
             userRepository.saveAll(userList);
             return userList;
@@ -113,8 +119,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteById(Integer id) {
-
+    public void deleteById(int userId, int adminId) throws Exception {
+        boolean isAuthorize = checkAdminAuthorization(adminId);
+        if(isAuthorize){
+            userRepository.deleteById(userId);
+        }
     }
 
     @Override
@@ -175,6 +184,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getStudentsByTutorId(int tutorId) {
         return userRepository.findAllByTutorId(tutorId);
+    }
+
+    public List<User> getAllStudents(){
+        return userRepository.findAllByRoleId(STUDENT_ROLE);
     }
 
     @Override
@@ -239,6 +252,48 @@ public class UserServiceImpl implements UserService {
         userRepository.saveAll(tempStudentList);
     }
 
+    @Override
+    public void forgotPassword(String email) throws Exception {
+        User user = userRepository.findByEmail(email);
+        if (user == null){
+            throw new ResourceNotFoundException("User not found.");
+        }
+
+        try {
+            String resetPassword = RandomStringUtils.randomAlphanumeric(8);
+//            String resetPassword = "1234ABCD";
+            user.setPassword(resetPassword);
+            userRepository.save(user);
+            appUtility.sentMail(email, resetPassword);
+        }catch (Exception ex) {
+            throw new Exception("There is an error during generate new password. Please try again later");
+        }
+    }
+
+    @Override
+    public UserResponseDto changeRole(int userId, int roleId, int adminId) throws Exception {
+        User admin = getUser(adminId);
+
+        if(admin.getRole().getId() != 4){
+            throw new Exception("You are not authorization");
+        }
+
+        User user = getUser(userId);
+
+        Role role = roleRepository.findById(roleId).get();
+        user.setRole(role);
+
+        if(role.getId() != 1){
+            user.setTutor(null);
+            user.setTutorFlag(false);
+        }
+
+        userRepository.save(user);
+        UserResponseDto userResponseDto = UserResponseDto.fromUser(user);
+
+        return userResponseDto;
+    }
+
     private void createDirectory(int userId) {
         Path fileStorageLocation = Paths.get(fileStorageProperties.getUploadAvatarDir() + "/" + userId)
                 .toAbsolutePath().normalize();
@@ -247,6 +302,15 @@ public class UserServiceImpl implements UserService {
             Files.createDirectories(fileStorageLocation);
         } catch (Exception ex) {
             throw new FileStorageException("Could not create the directory where the uploaded files will be stored.", ex);
+        }
+    }
+
+    private boolean checkAdminAuthorization(int userId) throws Exception {
+        Optional<User> user = userRepository.findById(userId);
+        if(!user.isPresent() || user.get().getRole().getId() != 4){
+            throw new Exception("You are not authorized.");
+        }else{
+            return true;
         }
     }
 

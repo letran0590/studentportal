@@ -21,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,7 +43,6 @@ public class CommentServiceImpl implements CommentService {
         this.documentRepository = documentRepository;
     }
 
-
     @Override
     public Comment save(CreateCommentRequest request) {
         ModelMapper modelMapper = new ModelMapper();
@@ -55,6 +55,7 @@ public class CommentServiceImpl implements CommentService {
         comment.setUser(user);
         comment.setDocument(document);
         comment.setText(request.getText());
+        comment.setDateComment(new Date());
         return commentRepository.save(comment);
     }
 
@@ -92,5 +93,4 @@ public class CommentServiceImpl implements CommentService {
             return new ArrayList<>();
         }
     }
-
 }

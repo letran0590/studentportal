@@ -34,6 +34,7 @@ public class UserController {
 	public ResponseEntity<User> create(@RequestBody @Valid CreateUserRequest request){
 		return ResponseEntity.ok(userService.save(request));
 	}
+
 	@PostMapping("/login")
 	public ResponseDto<UserResponseDto> login(@RequestBody @Valid LoginRequest request){
 		UserResponseDto userResponse = userService.login(request);
@@ -95,4 +96,23 @@ public class UserController {
 		return userService.getStudentsByTutorId(tutorId);
 	}
 
+	@GetMapping("/getAllStudents")
+	public List<User> getStudentsByTutorId(){
+		return userService.getAllStudents();
+	}
+
+	@PostMapping("/{email}/forgotPassword")
+	public void forgotPassword(@PathVariable String email) throws Exception {
+		userService.forgotPassword(email);
+	}
+
+	@PutMapping("/{user_id}/changeRole")
+	public UserResponseDto changeRole(@PathVariable("user_id") int userId, @RequestParam("role_id") int roleId, @RequestParam("admin_id") int adminId) throws Exception {
+		return userService.changeRole(userId,roleId,adminId);
+	}
+
+	@GetMapping("/delete")
+	public void deleteUser(@RequestParam("user_id") int userId, @RequestParam("admin_id") int adminId) throws Exception {
+		userService.deleteById(userId, adminId);
+	}
 }

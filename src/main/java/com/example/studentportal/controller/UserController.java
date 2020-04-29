@@ -118,6 +118,7 @@ public class UserController {
 
 	@PutMapping("/admin/changePassword")
 	public void adminChangePassword(@RequestParam("admin_id") int adminId, @RequestParam("user_id") int userId, @RequestParam("password") String password) throws Exception {
+		//Testing
 		userService.adminChangePassword(adminId, userId, password);
 	}
 }

@@ -103,13 +103,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> assignStudents(UpdateUserRequest request) {
-        User tutor = userRepository.findById(request.getTutorId()).orElseThrow(() -> new ResourceNotFoundException("tutorId " + request.getTutorId() + " not found"));
+//        User tutor = userRepository.findById(request.getTutorId()).orElseThrow(() -> new ResourceNotFoundException("tutorId " + request.getTutorId() + " not found"));
+        Optional<User> checkTutor = userRepository.findById(request.getTutorId());
+        User tutor = null;
+        if(checkTutor.isPresent()){
+            tutor = checkTutor.get();
+        }
         if (!CollectionUtils.isEmpty(request.getStudentIds())) {
             List<User> userList = userRepository.findAllByIdIn(request.getStudentIds());
+            User finalTutor = tutor;
             userList.stream().forEach(user -> {
-                user.setTutor(tutor);
-                user.setTutorFlag(true);
-                appUtility.sentConfirmMail(user, tutor);
+                user.setTutor(finalTutor);
+                if (finalTutor == null){
+                    user.setTutorFlag(false);
+                }else{
+                    user.setTutorFlag(true);
+                }
+                appUtility.sentConfirmMail(user, finalTutor);
             });
             userRepository.saveAll(userList);
             return userList;
@@ -292,6 +302,16 @@ public class UserServiceImpl implements UserService {
         UserResponseDto userResponseDto = UserResponseDto.fromUser(user);
 
         return userResponseDto;
+    }
+
+    @Override
+    public void adminChangePassword(int adminId, int userId, String password) throws Exception {
+        boolean isAuthorized = checkAdminAuthorization(adminId);
+        if(isAuthorized){
+            User user = getUser(userId);
+            user.setPassword(password);
+            userRepository.save(user);
+        }
     }
 
     private void createDirectory(int userId) {

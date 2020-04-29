@@ -42,4 +42,6 @@ public interface UserService {
     void forgotPassword(String email) throws Exception;
 
     UserResponseDto changeRole(int userId, int roleId, int adminId) throws Exception;
+
+    void adminChangePassword(int adminId, int userId, String password) throws Exception;
 }

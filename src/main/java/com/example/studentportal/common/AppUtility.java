@@ -71,11 +71,19 @@ public class AppUtility {
                     Message.RecipientType.TO,
                     InternetAddress.parse(student.getEmail())
             );
-            message.setSubject("Introduce tutor");
-            message.setText("Hi " + student.getFirstName() +
-                    "\n" +
-                    "Your new tutor is " + tutor.getFirstName() + "." +
-                    "\nWish you study good.");
+            if(tutor != null){
+                message.setSubject("Introduce tutor");
+                message.setText("Hi " + student.getFirstName() +
+                        "\n" +
+                        "Your new tutor is " + tutor.getFirstName() + "." +
+                        "\nWish you study good.");
+            }else{
+                message.setSubject("Your tutor has been changed.");
+                message.setText("Hi " + student.getFirstName() +
+                        "\n" +
+                        "Please wait for another tutor assigned. " +
+                        "\nWish you study good.");
+            }
 
             Transport.send(message);
 

@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping(ApiConstant.DOCUMENT) // This means URL's start with /demo (after Application path)
 public class DocumentController {
 	private static final Logger logger = LoggerFactory.getLogger(DocumentController.class);

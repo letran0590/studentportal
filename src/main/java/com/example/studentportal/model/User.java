@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -58,6 +59,7 @@ public class User {
     @Email(message = "Please provide a valid email address")
     @Pattern(regexp = ".+@.+\\..+", message = "Please provide a valid email address")
     @NonNull
+    @UniqueElements
     private String email;
 
 //	@ManyToOne(fetch = FetchType.LAZY, optional = false)

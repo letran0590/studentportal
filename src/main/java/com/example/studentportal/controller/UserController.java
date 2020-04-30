@@ -92,13 +92,16 @@ public class UserController {
 	}
 
 	@GetMapping("/getStudents")
-	public List<User> getStudentsByTutorId(@RequestParam("tutorId") int tutorId){
-		return userService.getStudentsByTutorId(tutorId);
+	public List<User> getStudentsByTutorId(@RequestParam("tutorId") int tutorId,
+										   @RequestParam(name = "start", required = false) int start,
+										   @RequestParam(name = "limit", required = false) int limit){
+		return userService.getStudentsByTutorId(tutorId, start, limit);
 	}
 
 	@GetMapping("/getAllStudents")
-	public List<User> getStudentsByTutorId(){
-		return userService.getAllStudents();
+	public List<User> getStudentsByTutorId(@RequestParam(name = "start", required = false) int start,
+										   @RequestParam(name = "limit", required = false) int limit){
+		return userService.getAllStudents(start, limit);
 	}
 
 	@PostMapping("/{email}/forgotPassword")

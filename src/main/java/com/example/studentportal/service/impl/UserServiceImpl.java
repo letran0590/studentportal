@@ -20,6 +20,9 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -71,7 +74,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getListUserByFilter(UserFilterRequest filterRequest) {
-        return userRepository.findAllByTutorFlagAndRole_Id(filterRequest.isTutorFlag(), filterRequest.getRoleId());
+        Pageable pageable = PageRequest.of(filterRequest.getStart(), filterRequest.getLimit());
+        Page<User> userPage = userRepository.findAllByTutorFlagAndRole_Id(filterRequest.isTutorFlag(), filterRequest.getRoleId(), pageable);
+        if(userPage.getTotalElements() >= 0){
+            List<User> userList = userPage.getContent();
+            return userList;
+        }else{
+            return new ArrayList<>();
+        }
     }
 
     @Override
@@ -192,12 +202,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getStudentsByTutorId(int tutorId) {
-        return userRepository.findAllByTutorId(tutorId);
+    public List<User> getStudentsByTutorId(int tutorId, int start, int limit) {
+        Pageable pageable = PageRequest.of(start, limit);
+        Page<User> userPage = userRepository.findAllByTutorId(tutorId, pageable);
+        List<User> userList = userPage.getContent();
+        return userList;
     }
 
-    public List<User> getAllStudents(){
-        return userRepository.findAllByRoleId(STUDENT_ROLE);
+    public List<User> getAllStudents(int start, int limit){
+        Pageable pageable = PageRequest.of(start, limit);
+        List<User> userList = userRepository.findAllByRoleId(STUDENT_ROLE, pageable).getContent();
+        return userList;
     }
 
     @Override

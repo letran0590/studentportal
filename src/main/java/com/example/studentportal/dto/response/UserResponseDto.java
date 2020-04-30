@@ -26,6 +26,8 @@ public class UserResponseDto {
 
     private Date dob;
 
+    private String avatarViewUrl;
+
     public static UserResponseDto fromUser(User user){
         UserResponseDto responseDto = UserResponseDto.builder()
                 .id(user.getId())
@@ -36,6 +38,7 @@ public class UserResponseDto {
                 .tutor(user.getTutor())
                 .dob(user.getDob())
                 .address(user.getAddress())
+                .avatarViewUrl(user.getAvatarViewUrl())
                 .build();
         return responseDto;
     }

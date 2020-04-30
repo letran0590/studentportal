@@ -31,9 +31,9 @@ public interface UserService {
 
     UserResponseDto updatePassword(UpdatePasswordRequest request);
 
-    List<User> getStudentsByTutorId(int tutorId);
+    List<User> getStudentsByTutorId(int tutorId, int start, int limit);
 
-    public List<User> getAllStudents();
+    public List<User> getAllStudents(int start, int limit);
 
     User uploadAvatar(int userId, MultipartFile file) throws IOException;
 

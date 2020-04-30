@@ -59,7 +59,7 @@ public class User {
     @Email(message = "Please provide a valid email address")
     @Pattern(regexp = ".+@.+\\..+", message = "Please provide a valid email address")
     @NonNull
-    @UniqueElements
+//    @UniqueElements
     private String email;
 
 //	@ManyToOne(fetch = FetchType.LAZY, optional = false)

@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +34,9 @@ public class BlogServiceImpl implements BlogService {
         }else{
             ModelMapper modelMapper = new ModelMapper();
             Blog blog = modelMapper.map(request, Blog.class);
+
+            blog.setCreatedDate(new Date());
+
             return blogRepository.save(blog);
         }
     }
@@ -48,6 +52,9 @@ public class BlogServiceImpl implements BlogService {
                 throw new ResourceNotFoundException("BlogID is not valid");
             }else{
                 blog.setBody(body);
+
+                blog.setLastModifiedDate(new Date());
+
                 return blogRepository.save(blog);
             }
         }

@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @NoArgsConstructor
 @Getter
@@ -26,5 +27,9 @@ public class Blog {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+    private Date createdDate;
+
+    private Date lastModifiedDate;
 
 }

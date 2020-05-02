@@ -89,13 +89,16 @@ public class ChatServiceImpl implements ChatService {
     public List<ChatResponseDto> findAllPaging(ChatFilterRequest request) {
         Pageable pageable = PageRequest.of(request.getStart(), request.getLimit());
         Page<Chat> chats;
-        if (null != request.getTutorId()) {
-            chats = chatRepository.findAllByTutor_Id(request.getTutorId(), pageable);
-        } else if (null != request.getStudentId()) {
-            chats = chatRepository.findAllByStudent_Id(request.getStudentId(), pageable);
-        } else {
-            chats = chatRepository.findAll(pageable);
-        }
+//        if (null != request.getTutorId()) {
+//            chats = chatRepository.findAllByTutor_Id(request.getTutorId(), pageable);
+//        } else if (null != request.getStudentId()) {
+//            chats = chatRepository.findAllByStudent_Id(request.getStudentId(), pageable);
+//        } else {
+//            chats = chatRepository.findAll(pageable);
+//        }
+
+        chats = chatRepository.findAllByStudent_IdAndTutor_Id(request.getStudentId(), request.getTutorId(), pageable);
+
         long total = chats.getTotalElements();
         List<ChatResponseDto> responseDtos;
         if (total > 0) {

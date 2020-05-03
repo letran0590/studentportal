@@ -77,6 +77,14 @@ public class DocumentServiceImpl implements DocumentService {
         if (tutor == null) {
             throw new ResourceNotFoundException("TutorId " + request.getTutorId() + " not found");
         }
+
+        User sender;
+        if(request.getSenderId() == request.getTutorId()){
+            sender = tutor;
+        }else{
+            sender = student;
+        }
+
         try {
             // Check if the file's name contains invalid characters
             if(fileName.contains("..")) {
@@ -86,6 +94,7 @@ public class DocumentServiceImpl implements DocumentService {
             Document document = new Document();
             document.setStudent(student);
             document.setTutor(tutor);
+            document.setSender(sender);
             document.setName(fileName);
             document.setUploadedDate(new Date());
 

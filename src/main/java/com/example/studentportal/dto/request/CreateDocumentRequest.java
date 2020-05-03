@@ -17,5 +17,8 @@ public class CreateDocumentRequest {
     private Integer tutorId;
 
     @NonNull
+    private Integer senderId;
+
+    @NonNull
     private MultipartFile file;
 }

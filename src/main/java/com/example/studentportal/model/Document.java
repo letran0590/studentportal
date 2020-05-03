@@ -40,6 +40,10 @@ public class Document {
 	@JoinColumn(name = "tutor_id", referencedColumnName = "id")
 	private User tutor;
 
+	@ManyToOne
+	@JoinColumn(name = "sender_id", referencedColumnName = "id")
+	private User sender;
+
 	private String fileDownloadUri;
 	private String fileType;
 	private long size;

@@ -28,6 +28,8 @@ public class UploadDocumentResponseDto {
 
     private User tutor;
 
+    private User sender;
+
     private String fileDownloadUri;
 
     private String fileType;
@@ -42,6 +44,7 @@ public class UploadDocumentResponseDto {
                 .lastModified(document.getLastModified())
                 .student(document.getStudent())
                 .tutor(document.getTutor())
+                .sender(document.getSender())
                 .fileDownloadUri(document.getFileDownloadUri())
                 .fileType(document.getFileType())
                 .size(document.getSize())

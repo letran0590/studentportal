@@ -157,13 +157,15 @@ public class DocumentServiceImpl implements DocumentService {
         Pageable pageable = PageRequest.of(request.getStart(), request.getLimit());
         Page<Document> documents;
         long total = 0;
-        if (null != request.getTutorId()) {
-            documents = documentRepository.findAllByTutor_Id(request.getTutorId(), pageable);
-        } else if (null != request.getStudentId()){
-            documents = documentRepository.findAllByStudent_Id(request.getStudentId(), pageable);
-        } else {
-            documents = documentRepository.findAll(pageable);
-        }
+//        if (null != request.getTutorId()) {
+//            documents = documentRepository.findAllByTutor_Id(request.getTutorId(), pageable);
+//        } else if (null != request.getStudentId()){
+//            documents = documentRepository.findAllByStudent_Id(request.getStudentId(), pageable);
+//        } else {
+//            documents = documentRepository.findAll(pageable);
+//        }
+        documents = documentRepository.findAllByStudent_IdAndTutorId(request.getStudentId(), request.getTutorId(), pageable);
+
         total = documents.getTotalElements();
         List<UploadDocumentResponseDto> responseDtos;
         if (total > 0) {

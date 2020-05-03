@@ -12,5 +12,6 @@ import org.springframework.stereotype.Repository;
 public interface DocumentRepository extends CrudRepository<Document, Integer> {
     Page<Document> findAllByStudent_Id(Integer studentId, Pageable pageable);
     Page<Document> findAllByTutor_Id(Integer tutorId, Pageable pageable);
+    Page<Document> findAllByStudent_IdAndTutorId(Integer studentId, Integer tutorId, Pageable pageable);
     Page<Document> findAll(Pageable pageable);
 }

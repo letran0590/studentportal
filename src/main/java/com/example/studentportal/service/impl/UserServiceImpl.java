@@ -268,7 +268,8 @@ public class UserServiceImpl implements UserService {
             tempStudent.setEmail(row.getCell(3).getStringCellValue());
             tempStudent.setAddress(row.getCell(4).getStringCellValue());
             tempStudent.setDob(row.getCell(5).getDateCellValue());
-            tempStudent.setPassword(fileStorageProperties.getDefaultPassword());
+//            tempStudent.setPassword(fileStorageProperties.getDefaultPassword());
+            tempStudent.setPassword("student@123");
             if(null != studentRole){
                 tempStudent.setRole(studentRole);
             }

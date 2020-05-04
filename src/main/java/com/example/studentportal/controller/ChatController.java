@@ -41,4 +41,9 @@ public class ChatController {
 	public List<ChatResponseDto> filter(ChatFilterRequest request){
 		return chatService.findAllPaging(request);
 	}
+
+	@GetMapping("/number")
+	public Integer getNumberOfMessage(@RequestParam("user_id") int userId, @RequestParam("tutor_id") int tutorId, @RequestParam("no_day") int numberOfDays){
+		return chatService.getNoOfMessage(userId, tutorId, numberOfDays);
+	}
 }

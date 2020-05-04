@@ -18,6 +18,6 @@ public interface ChatRepository extends CrudRepository<Chat, Integer> {
     Page<Chat> findAllByTutor_Id(Integer tutorId, Pageable pageable);
     Page<Chat> findAllByStudent_IdAndTutor_Id(int studentId, int tutorId, Pageable pageable);
 //    Page<Chat> findAllByStudent_IdAndTutor_IdAndDateChatFrom(int studentId, int tutorId, Date dateChat, Pageable pageable);
-//    List<Chat> findAllByCreatedAtBefore(Date date);
+    List<Chat> findAllByStudentIdAndTutorIdAndDateChatBetween(int studentId, int tutorId, Date firstTime, Date secondTime);
     Page<Chat> findAll(Pageable pageable);
 }

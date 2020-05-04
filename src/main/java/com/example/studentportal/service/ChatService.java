@@ -19,4 +19,6 @@ public interface ChatService {
 
     List<ChatResponseDto> findAllPaging(ChatFilterRequest request);
 
+    Integer getNoOfMessage(int userId, int tutorId, int numberOfDays);
+
 }

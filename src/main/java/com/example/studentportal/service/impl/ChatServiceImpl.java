@@ -11,6 +11,7 @@ import com.example.studentportal.model.User;
 import com.example.studentportal.repository.ChatRepository;
 import com.example.studentportal.repository.UserRepository;
 import com.example.studentportal.service.ChatService;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -109,5 +110,13 @@ public class ChatServiceImpl implements ChatService {
         } else {
             return new ArrayList<>();
         }
+    }
+
+    @Override
+    public Integer getNoOfMessage(int userId, int tutorId, int numberOfDays) {
+        Date today = new Date();
+        Date firstTime = new DateTime(today).minusDays(numberOfDays).toDate();
+        List<Chat> chatList = chatRepository.findAllByStudentIdAndTutorIdAndDateChatBetween(userId, tutorId, firstTime, today);
+        return chatList.size();
     }
 }
